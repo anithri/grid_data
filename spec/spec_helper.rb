@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
@@ -9,6 +8,7 @@ Spork.prefork do
   # need to restart spork for it take effect.
 
   require 'rspec'
+  require 'factory_girl'
 
   RSpec.configure do |config|
     config.color = true
@@ -17,6 +17,12 @@ Spork.prefork do
     config.filter_run :focus
   end
 
+  Dir["support/**/*.rb"].each {|f| require_relative f}
+  require_relative 'support/test_stuff'
+
+  require 'active_record'
+  ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'spec/support/db/test.db')
+  ActiveRecord::Migrator.migrate("spec/support/db/migrate/201202131745_create_stuff.rb")
 end
 
 Spork.each_run do
@@ -24,4 +30,9 @@ Spork.each_run do
 
   require_relative '../lib/grid_data'
   require_relative '../lib/grid_data/strategy'
+
+  require_relative 'support/stuff'
+  GridData.config.model_grid_yaml_path = 'spec/config'
+  
+
 end

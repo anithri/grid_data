@@ -14,12 +14,16 @@ gem "jquery-rails"
 # your gem to rubygems.org.
 
 group :development, :test do
+  gem 'sqlite3'
+  gem 'activerecord', require: 'active_record'
   gem 'irbtools'
   gem 'spork'
   gem 'rspec'
-  gem 'guard'
+  gem 'factory_girl'
+  gem 'guard', git: 'https://github.com/guard/guard.git'
   gem 'guard-rspec'
   gem 'guard-bundler'
+  gem 'guard-spork'
 
   require 'rbconfig'
 
