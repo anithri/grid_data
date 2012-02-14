@@ -46,6 +46,7 @@ module GridData
     included do
       @grid_data_strategy = ::GridData::Strategy.determine_strategy(self)
       @grid_data_info, @grid_data_columns = self.collect_grid_info
+      #@grid_data_paginator == ::GridData::Paginator.determine_paginator(self)
     end
 
 

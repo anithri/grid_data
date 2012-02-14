@@ -22,6 +22,10 @@ module GridData::Strategies
       chain
     end
 
+    def do_sort(chain, index, sort_order)
+      chain.order(index.split(/[ ,]+/).map{|e| "#{e} #{sort_order}"}.join(", "))
+    end
+
     protected
     def detect_ar_class?(model)
       model.respond_to?(:descends_from_active_record?) && model.descends_from_active_record?

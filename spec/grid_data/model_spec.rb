@@ -7,7 +7,7 @@ describe GridData::Model do
   end
 
   before :each do
-    GridData.config.registered_strategies =
+    GridData.config.default_paginator = GridData::Paginators::KaminariPaginator
     class TestStuff
       include ::GridData::Model
     end
@@ -23,6 +23,11 @@ describe GridData::Model do
       col_model_array.length.should == 2
       col_model_array[:id][:name].should == "id"
       col_model_array[:name][:width].should == 300
+    end
+
+    it "should set a paginator" do
+      pending
+      TestStuff.instance_variable_get(:@grid_data_paginator).should be GridData::Paginators::KaminariPaginator
     end
   end
 

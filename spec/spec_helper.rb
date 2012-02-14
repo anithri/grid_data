@@ -3,6 +3,10 @@ require 'spork'
 #require 'spork/ext/ruby-debug'
 
 Spork.prefork do
+  SPEC_DIR=File.dirname(__FILE__)
+  SUPPORT_DIR = File.join(SPEC_DIR, "support")
+  DB_DIR = File.join(SUPPORT_DIR, "db")
+
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
@@ -17,22 +21,21 @@ Spork.prefork do
     config.filter_run :focus
   end
 
-  Dir["support/**/*.rb"].each {|f| require_relative f}
-  require_relative 'support/test_stuff'
+  Dir["#{SUPPORT_DIR}/*.rb"].each {|f| require_relative f}
 
-  require 'active_record'
-  ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'spec/support/db/test.db')
-  ActiveRecord::Migrator.migrate("spec/support/db/migrate/201202131745_create_stuff.rb")
+  #require 'active_record'
+  #ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: "#{DB_DIR}/grid_data_test.sqlite3")
+  #ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS 'my_models'")
+  #load "#{DB_DIR}/schema.rb"
+  #load "#{DB_DIR}/models.rb"
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+  require_relative "#{SUPPORT_DIR}/test_stuff"
 
   require_relative '../lib/grid_data'
-  require_relative '../lib/grid_data/strategy'
 
-  require_relative 'support/stuff'
   GridData.config.model_grid_yaml_path = 'spec/config'
-  
 
 end

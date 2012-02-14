@@ -13,6 +13,13 @@ end
 #require the rest of the gem after config has been initialized
 require_relative 'grid_data/exception'
 require_relative 'grid_data/utility'
+
 require_relative 'grid_data/strategy'
 require_relative 'grid_data/strategies/active_record'
+
+require_relative 'grid_data/paginator'
+require_relative 'grid_data/paginators/kaminari_paginator'
+#require_relative 'grid_data/paginators/limit_offset_paginator'
+#require_relative 'grid_data/paginators/will_paginate_paginator'
+
 require_relative 'grid_data/model'

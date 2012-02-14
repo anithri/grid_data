@@ -36,5 +36,9 @@ group :development, :test do
     gem 'win32console', :require => false
     gem 'rb-notifu', '>= 0.0.4', :require => false
   end
+
+  #for testing specific strategies and paginators
+  gem 'kaminari'
+
 end
 

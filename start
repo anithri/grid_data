@@ -1,0 +1,23 @@
+#!/bin/zsh
+xdotool key alt+F10
+sleep 1s
+xdotool key ctrl+shift+e
+sleep 1s
+xdotool key ctrl+shift+o
+sleep 1s
+xdotool key alt+Left
+sleep 1s
+xdotool key ctrl+shift+o
+sleep 1s
+xdotool key alt+Up
+sleep 1s
+xdotool key super+g
+sleep 1s
+xdotool type "rvm use 1.9.3@pc2"
+xdotool key Return
+sleep 1s
+xdotool key super+shift+g
+
+xdotool type "bundle exec guard"
+xdotool key Return
+
