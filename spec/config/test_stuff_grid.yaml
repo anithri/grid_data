@@ -14,7 +14,14 @@
 #    - :name
 #    - :index
 
-:grid: ~
+# Paginator to use, can also be set in GridData.config
+:paginator: ~
+
+# Strategy to use
+:strategy: ~
+
+# Grid options for this model.  remove {} if you place keys.
+:grid: {}
 
 :columns:
   :id:
