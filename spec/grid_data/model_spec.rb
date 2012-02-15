@@ -9,17 +9,17 @@ describe GridData::Model do
   before :each do
     GridData.config.default_paginator = GridData::Paginators::KaminariPaginator
     class TestStuff
-      include ::GridData::Model
+      extend ::GridData::Model
     end
   end
 
   context "when included" do
     it "should set a strategy" do
-      TestStuff.instance_variable_get(:@grid_data_strategy).should be GridData::Strategies::ActiveRecord
+      TestStuff.grid_data_config.strategy_to_call.should be GridData::Strategies::ActiveRecord
     end
 
     it "should read it's config file" do
-      col_model_array = TestStuff.instance_variable_get(:@grid_data_columns)
+      col_model_array = TestStuff.class_variable_get(:@grid_data_columns)
       col_model_array.length.should == 2
       col_model_array[:id][:name].should == "id"
       col_model_array[:name][:width].should == 300
@@ -27,7 +27,7 @@ describe GridData::Model do
 
     it "should set a paginator" do
       pending
-      TestStuff.instance_variable_get(:@grid_data_paginator).should be GridData::Paginators::KaminariPaginator
+      TestStuff.class_variable_get(:@grid_data_paginator).should be GridData::Paginators::KaminariPaginator
     end
   end
 

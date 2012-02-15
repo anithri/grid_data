@@ -3,28 +3,44 @@ module GridData
     extend self
 
     def determine_paginator(model)
-      output = extract_from_model_grid_data || extract_from_grid_data_config
-      test_paginator(output)
-      return output
+      find_paginator_from_model(model) || find_paginator_from_global_config || no_paginator_found!(model)
     end
 
-    def extract_from_model_grid_data
-      return false unless @grid_model_data && @grid_model_data.respond_to(:[]) && grid_model_data[:paginator]
-      begin
-        return grid_data_model[:paginator].constantize
-      rescue NameError
-        raise GridData::InvalidPaginatorError, "invalid paginator #{grid_data_model[:paginator].  Does not resolve to
-        constant}"
-      end
+    protected
+
+    def find_paginator_from_model(model)
+      return false unless model.respond_to?(:grid_data_config) && model.grid_data_config.respond_to?(:[])
+      coerce_to_callable(model.grid_data_config[:paginator], "it was set by #{model}.grid_data_config.paginator")
     end
 
-    def extract_from_grid_data_config
-      return false unless GridData.config.paginator
-      
+    def find_paginator_from_global_config
+      coerce_to_callable(GridData.config.paginator, "it was set in GridData.config.paginator")
     end
 
-    def test_paginator(mod)
+    def is_valid_paginator?(paginator)
+      paginator.respond_to?(:do_paging)
+    end
 
+    def coerce_to_callable(paginator,exception_suffix = "")
+      return false if paginator.nil?
+      return paginator if is_valid_paginator?(paginator)
+      return paginator.constantize if is_valid_paginator?(paginator.constantize)
+      raise GridData::InvalidPaginatorError, "#{paginator.constantize} has no #do_paging method."
+    rescue
+      raise GridData::InvalidPaginatorError,
+            "#{GridData.config.paginator} is not a valid Paginator.#{exception_suffix}"
+    end
+
+    def no_paginator_found!(model)
+      raise GridData::NoPaginatorFoundError, "No paginator found for #{model}"
     end
   end
 end
+__END__
+1) GridData::Paginator#determine_paginator If no GridData.config.paginator is set should raise an exception if
+                      #it find an invalid paginator in the model
+   Failure/Error: lambda{subject.determine_paginator(model_with_invalid_config)}.should
+raise_error(GridData::InvalidPaginatorError,/SomeMessedUpThing/)
+     expected GridData::InvalidPaginatorError with message matching /SomeMessedUpThing/,
+                                                                    got #<NoMethodError: undefined method `grid_data' for #<Class:0x00000002bc5028>>
+   # ./spec/grid_data/paginator_spec.rb:17:in `block (4 levels) in <top (required)>'

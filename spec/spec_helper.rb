@@ -33,6 +33,7 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
   require_relative "#{SUPPORT_DIR}/test_stuff"
+  require_relative "#{SUPPORT_DIR}/paginator_stuff"
 
   require_relative '../lib/grid_data'
 

@@ -13,6 +13,7 @@ end
 #require the rest of the gem after config has been initialized
 require_relative 'grid_data/exception'
 require_relative 'grid_data/utility'
+require_relative 'grid_data/default_config'
 
 require_relative 'grid_data/strategy'
 require_relative 'grid_data/strategies/active_record'

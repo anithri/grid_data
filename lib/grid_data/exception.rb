@@ -7,5 +7,5 @@ module GridData
 
   class PaginatorError < GridDataError; end
   class NoPaginatorFoundError < PaginatorError; end
-  class InvalidStrategyError < PaginatorError; end
+  class InvalidPaginatorError < PaginatorError; end
 end
