@@ -44,5 +44,6 @@ group :development, :test do
   #for testing specific strategies and paginators
   gem 'kaminari'
 
+
 end
 

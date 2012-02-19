@@ -38,25 +38,29 @@ module ::Guard
     end
 
     def status_line
-      total = @repo.status.files.count
+      out = ""
+      total = 0
+      {changed: [:yellow, '~'], added: [:green, '+'], deleted: [:red, '-'], untracked: [:blue, '?']}.each do |type, options|
+        count = @repo.status.send(type).count
+        next unless count > 0
+        total += count
+        out << [::Term::ANSIColor.send(options[0]), options[1], count, Term::ANSIColor.reset, " "].join("")
+      end
       status_color = case
                        when total == 0
+                         puts "WTF"
                          ::Term::ANSIColor.green
                        when total < 6
                          ::Term::ANSIColor.yellow
                        else
                          ::Term::ANSIColor.red
                      end
-      out = status_color + "Git Status: "
-      {changed: [:yellow, '~'], added: [:green, '+'], deleted: [:red, '-'], untracked: [:blue, '?']}.each do |type, options|
-        count = @repo.status.send(type).count
-        next unless count > 0
-        out << [::Term::ANSIColor.send(options[0]), options[1], count, " "].join("")
-      end
-      out
+      status_color + "Git Status: " + ::Term::ANSIColor.reset + out
     end
   end
 end
 
-guard 'grit'
+guard 'grit' do
+  watch(%r(\.*))
+end
 
