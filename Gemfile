@@ -24,6 +24,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-bundler'
   gem 'guard-spork'
+  gem 'grit'
 
   require 'rbconfig'
 

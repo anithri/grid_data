@@ -17,4 +17,20 @@ guard 'rspec', :cli => "--color --drb", :version => 2 do
   watch('spec/spec_helper.rb')  { "spec" }
 end
 
+require 'guard/guard'
+require 'grit'
+
+module ::Guard
+  class GritGuard < ::Guard::Guard
+
+    def initialize
+      super
+      @repo = ::Grit::Repo.new(Dir.pwd)
+    end
+
+    def run_on_change(paths)
+      UI.info "Git Status: M:#{@repo.status.changed.keys.count} A:#{@repo.status.added.keys.count} D:#{@repo.status.deleted.keys.count} U:#{@repo.status.untracked.keys.count}"
+    end
+  end
+end
 
