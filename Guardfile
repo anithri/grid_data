@@ -17,20 +17,46 @@ guard 'rspec', :cli => "--color --format Fuubar --drb", :version => 2, :notifica
   watch('spec/spec_helper.rb')  { "spec" }
 end
 
-require 'guard/guard'
-require 'grit'
 
 module ::Guard
-  class GritGuard < ::Guard::Guard
+  class Grit < Guard
 
-    def initialize
+    def initialize(*args)
+      require 'grit'
+      require 'term/ansicolor'
+
       super
       @repo = ::Grit::Repo.new(Dir.pwd)
     end
 
+    def start
+      UI.info status_line
+    end
+
     def run_on_change(paths)
-      UI.info "Git Status: M:#{@repo.status.changed.keys.count} A:#{@repo.status.added.keys.count} D:#{@repo.status.deleted.keys.count} U:#{@repo.status.untracked.keys.count}"
+      UI.info status_line
+    end
+
+    def status_line
+      total = @repo.status.files.count
+      status_color = case
+                       when total == 0
+                         ::Term::ANSIColor.green
+                       when total < 6
+                         ::Term::ANSIColor.yellow
+                       else
+                         ::Term::ANSIColor.red
+                     end
+      out = status_color + "Git Status: "
+      {changed: [:yellow, '~'], added: [:green, '+'], deleted: [:red, '-'], untracked: [:blue, '?']}.each do |type, options|
+        count = @repo.status.send(type).count
+        next unless count > 0
+        out << [::Term::ANSIColor.send(options[0]), options[1], count, " "].join("")
+      end
+      out
     end
   end
 end
+
+guard 'grit'
 

@@ -47,6 +47,7 @@ describe GridData::Config do
   describe "#merge_hash(to, from)" do
     context "for shallow hashes" do
       it "should merge two hashes" do
+
         merged = subject.merge_hash(config_default_yaml, alternate_yaml)
         merged.should be_a Hash
         merged.should have_key(:foo)
