@@ -54,7 +54,7 @@ module ::Guard
                        else
                          ::Term::ANSIColor.red
                      end
-      out ||= "Clean!"
+      out = out.empty? ? "Clean!" : out
       status_color + "Git Status: " + ::Term::ANSIColor.reset + out
     end
   end
