@@ -15,8 +15,9 @@ guard 'rspec', :cli => "--color --format Fuubar --drb", :version => 2, :notifica
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
+  callback(:run_all_end) {|*args| puts "*" * 30 + "\n" + "WOOT #{args.inspect}"}
+  callback(:run_on_change_end) {|*args| puts "*" * 30 + "\n" + "WOOT #{args.inspect}"}
 end
-
 
 module ::Guard
   class Grit < Guard
