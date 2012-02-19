@@ -48,7 +48,6 @@ module ::Guard
       end
       status_color = case
                        when total == 0
-                         puts "WTF"
                          ::Term::ANSIColor.green
                        when total < 6
                          ::Term::ANSIColor.yellow
