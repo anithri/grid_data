@@ -12,6 +12,12 @@ PATH
     grid_data (0.0.1)
       rails (~> 3.2.1)
 
+PATH
+  remote: /home/scottp/workspace/config_library
+  specs:
+    config_library (0.0.3)
+      facets
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -55,6 +61,7 @@ GEM
     diff-lcs (1.1.3)
     erubis (2.7.0)
     every_day_irb (1.2.0)
+    facets (2.9.3)
     factory_girl (2.5.2)
       activesupport (>= 2.3.9)
     fancy_irb (0.7.2)
@@ -181,6 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  config_library (>= 0.0.3)!
   deep_merge
   factory_girl
   fuubar

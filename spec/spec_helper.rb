@@ -1,4 +1,5 @@
 require 'spork'
+
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
@@ -25,8 +26,5 @@ Spork.each_run do
   # This code will be run each time you run your specs.
 
   require_relative '../lib/grid_data'
-  require_relative '../lib/grid_data/exception'
-  require_relative '../lib/grid_data/config'
-  require_relative '../lib/grid_data/facade'
 
 end
