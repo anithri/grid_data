@@ -11,6 +11,7 @@ describe GridData::Facade do
 
 
   describe "#grid_data_model" do
+#    specify {true.should be_false}
     it "should set the @model_strategy with the given object if the object is not a symbol or a string" do
       test_facade.set_model_strategy String
       test_facade.model_strategy.should == String
@@ -40,7 +41,7 @@ describe GridData::Facade do
         lambda { test_facade.set_model_strategy "foo_bar/baz"}.should raise_error(GridData::ModelStrategyError)
       end
     end
-    
+
   end
 
   describe "#grid_data_paginator" do
@@ -76,6 +77,7 @@ describe GridData::Facade do
   end
 
   describe "#load_config_file" do
+
     pending
   end
 

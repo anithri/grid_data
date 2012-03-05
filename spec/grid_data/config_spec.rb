@@ -2,7 +2,6 @@ require "rspec"
 
 describe GridData::Config do
   subject { GridData::Config }
-
   before(:all) { @project_lib_dir = Pathname.new(__FILE__ + "/../../../lib").expand_path }
   describe "#generate_default_file_list(top_dir, yaml_ext='yaml'')" do
     it "should generate an empty list if the given directory is nil" do
