@@ -2,7 +2,10 @@ require "rspec"
 
 describe GridData::Config do
   subject { GridData::Config }
-  before(:all) { @project_lib_dir = Pathname.new(__FILE__ + "/../../../lib").expand_path }
+  before(:all) do
+    @project_dir = Pathname.new(__FILE__ + "/../../../").expand_path
+    @project_lib_dir = @project_dir + 'lib'
+  end
   describe "#generate_default_file_list(top_dir, yaml_ext='yaml'')" do
     it "should generate an empty list if the given directory is nil" do
       subject.generate_default_file_list(nil).should be_a(Array) && be_empty
@@ -35,11 +38,44 @@ describe GridData::Config do
                                                                      /extra_files.+abc.yaml.+def.yaml/)
     end
     it "should return an array of Pathnames if all the files exist" do
-      file_list = [@project_lib_dir.to_s + '/grid_data.rb', @project_lib_dir.to_s + '/../spec/grid_data_spec.rb']
+      file_list = [@project_lib_dir.to_s + '/grid_data.rb', @project_dir.to_s + '/spec/grid_data_spec.rb']
       result = subject.prep_extra_files(file_list)
       result.should be_a Array
       result.all?{|f| f.is_a?(Pathname)}.should be_true
     end
+  end
+
+  describe "#global_defaults(settings)" do
+    it "should initialize an empty ConfigLibrary if passed empty extra and top_dir options" do
+      result = GridData::Config.global_defaults()
+      result.should be_a ConfigLibrary::Base
+      result.search_order.should == []
+      result.books.should == {}
+    end
+
+    it "should initialize a ConfigLibrary::Base with one entry given a single value in extra_files" do
+      extra = @project_dir + "spec/support/bare/test_one.yaml"
+      result = GridData::Config.global_defaults(extra_files: [extra.to_s])
+      result.should be_a ConfigLibrary::Base
+      result.search_order.should == [:test_one]
+      result.books.should have_key(:test_one)
+    end
+
+    it "should initialize a ConfigLibrary::Base with 3 entries given spec/support as a config_dir" do
+      top_dir = @project_dir.to_s + "/spec/support/bare"
+      result = GridData::Config.global_defaults(config_dir: top_dir)
+      result.should be_a ConfigLibrary::Base
+      result.search_order.should == [:test_one, :test_three, :test_two]
+      result.books.keys.should =~ [:test_one, :test_two, :test_three]
+    end
+
+    it "should initialize a ConfigLibrary::Base with 3 entries with order determined by numbers" do
+      top_dir = @project_dir.to_s + "/spec/support/numbered"
+      result = GridData::Config.global_defaults(config_dir: top_dir)
+      result.should be_a ConfigLibrary::Base
+      result.search_order.should == [:test_three, :test_two, :test_one]
+    end
+
   end
 
 end
