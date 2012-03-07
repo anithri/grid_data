@@ -75,7 +75,6 @@ describe GridData::Config do
       result.should be_a ConfigLibrary::Base
       result.search_order.should == [:test_three, :test_two, :test_one]
     end
-
   end
 
 end

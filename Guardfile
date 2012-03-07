@@ -11,12 +11,10 @@ guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('spec/spec_helper.rb') { :rspec }
 end
 
-guard 'rspec', :cli => "--color --format Fuubar --drb", :version => 2, :notification => false do
+guard 'rspec', :cli => "--tag focus --color --format Fuubar --drb", :version => 2, :notification => false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
-  callback(:run_all_end) {|*args| puts "*" * 30 + "\n" + "WOOT #{args.inspect}"}
-  callback(:run_on_change_end) {|*args| puts "*" * 30 + "\n" + "WOOT #{args.inspect}"}
 end
 
 module ::Guard

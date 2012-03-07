@@ -37,5 +37,14 @@ module GridData
       raise  GridData::ModelError, "Can't find model for #{obj}'"
     end
 
+    def load_config_file(*files)
+      raise ArgumentError, "no files listed" unless files.length > 0
+      GridData::Config.add_new_books
+    end
+
+    def config
+      GridData.config
+    end
+
   end
 end
