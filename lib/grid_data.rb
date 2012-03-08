@@ -40,10 +40,10 @@ module GridData
     @config.add_new_books(new)
   end
 
-
 end
 
 require_relative 'grid_data/config'
 require_relative 'grid_data/exception'
+require_relative 'grid_data/sql_operations'
 require_relative 'grid_data/facade'
-
+require_relative 'grid_data/model_strategies/active_record'

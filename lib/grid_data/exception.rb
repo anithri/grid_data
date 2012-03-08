@@ -5,6 +5,7 @@ module GridData
   class ModelStrategyError < GridDataError; end
   class PaginatorError < GridDataError; end
   class ModelError < GridDataError; end
+  class SearchError < GridDataError; end
 
 end
 
