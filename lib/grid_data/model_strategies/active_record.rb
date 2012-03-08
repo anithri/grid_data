@@ -21,6 +21,9 @@ module GridData
         chain
       end
 
+      def sort(chain, sidx, sord)
+        chain.order("#{sidx} #{sord}")
+      end
 
     end
   end

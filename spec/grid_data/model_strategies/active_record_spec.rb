@@ -41,4 +41,10 @@ describe GridData::ModelStrategies::ActiveRecord do
 
     end
   end
+
+  describe "#sort(chain, sidx, sord)" do
+    it "should set order_values on chain" do
+      subject.sort(Color,"name",nil).order_values.should == ["name "]
+    end
+  end
 end

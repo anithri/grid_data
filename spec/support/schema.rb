@@ -3,4 +3,8 @@ ActiveRecord::Schema.define :version => 0 do
     t.string :name
     t.string :country
   end
+  create_table :countries, :force => true do |t|
+    t.string :name
+    t.string :code
+  end
 end
