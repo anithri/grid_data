@@ -9,6 +9,17 @@ describe GridData::Facade do
     end
   end
 
+  let(:full_facade) do
+    Module.new do
+      extend self
+      extend GridData::Facade
+      set_model_strategy "active_record"
+      set_paginator "kaminari"
+      facade_for
+    end
+  end
+
+
   describe "mattr_readers" do
     it "should have a method and class variable for each reader" do
       warn test_facade.class_variables.inspect

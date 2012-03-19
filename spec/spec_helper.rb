@@ -1,4 +1,6 @@
 require 'spork'
+require 'active_record'
+require 'sqlite3'
 
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
@@ -18,9 +20,12 @@ Spork.prefork do
     config.filter_run :focus
   end
 
+  ActiveRecord::Base.configurations = YAML.load_file('spec/support/database.yml')
+  ActiveRecord::Base.establish_connection('development')
+
   Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-  end
+end
 
 Spork.each_run do
   # This code will be run each time you run your specs.

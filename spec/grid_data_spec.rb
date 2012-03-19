@@ -47,7 +47,6 @@ describe GridData do
         config.config_dir = Dir.pwd + "/spec/support/numbered"
       end
       files = Dir.glob(Dir.pwd + "/spec/support/extra/*.yaml")
-      warn files
       subject.add_new_books(files)
       subject.config.search_order.should include(:extra_one, :extra_two)
     end

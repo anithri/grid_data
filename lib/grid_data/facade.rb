@@ -46,5 +46,32 @@ module GridData
       GridData.config
     end
 
+    def row_data(params)
+      page = params.fetch('page',1).to_i
+      rows = params.fetch('per',1).to_i
+      sidx = params['sidx']
+      sord = params['sord']
+
+      output_list = @@model_strategy.init(@@model)
+
+      if do_filter(params)
+        output_list = @model_strategy.filter(output_list, params)
+      end
+      if sidx && sord
+        output_list = @@model_strategy.sort(output_list, sidx, sord)
+      end
+
+      if @@paginator
+        output_list = @@paginator.page(output_list, page, rows)
+      else
+        output_list = @@model_strategy.page(output_list, page, rows)
+      end
+      return output_list
+    end
+
+    def do_filter(params)
+      params['_search'] == "true"
+    end
+
   end
 end
