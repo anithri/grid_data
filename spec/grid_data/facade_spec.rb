@@ -58,7 +58,6 @@ describe GridData::Facade do
     end
     context "when the string or symbol is a valid name in the context of GridData::ModelStrategies" do
       it "should turn the string or symbol into a Module constant and return it." do
-        module GridData; module ModelStrategies; module TestStrategy; end; end; end
         test_facade.set_model_strategy "test_strategy"
         test_facade.model_strategy.should == GridData::ModelStrategies::TestStrategy
         test_facade.set_model_strategy :test_strategy
@@ -90,7 +89,6 @@ describe GridData::Facade do
       end
       context "when the string or symbol is a valid name in the context of GridData::Paginators" do
         it "should turn the string or symbol into a Module constant and return it." do
-          module GridData; module Paginators; module TestPaginator; end; end; end
           test_facade.set_paginator "test_paginator"
           test_facade.paginator.should == GridData::Paginators::TestPaginator
           test_facade.set_paginator :test_paginator
@@ -138,14 +136,14 @@ describe GridData::Facade do
     it "should return a well formed hash, given just page and per parameters" do
       strategy = double(GridData::ModelStrategies::ActiveRecord)
       strategy.stub(:init).and_return("fake")
-      strategy.should_receive(:page) { |args| args[0]}
       strategy.should_receive(:finalize) { |args| args}
       strategy.should_receive(:total_rows).and_return(17)
-
+      GridData::Paginators::TestPaginator.stub(:page) {|args| args[0]}
       fake_facade = Module.new do
                   extend self
                   extend GridData::Facade
                   set_model_strategy strategy
+                  set_paginator :test_paginator
       end
 
       warn fake_facade.class_variables
@@ -161,15 +159,17 @@ describe GridData::Facade do
     it "should return a well formed hash, given page, rows, filters, and order" do
       strategy = double(GridData::ModelStrategies::ActiveRecord)
       strategy.stub(:init).and_return("fake")
-      strategy.should_receive(:page) { |args| args[0]}
       strategy.should_receive(:sort) { |args| args[0]}
       strategy.should_receive(:filter) { |args| args[0]}
       strategy.should_receive(:finalize) { |args| args}
       strategy.should_receive(:total_rows).and_return(17)
+      GridData::Paginators::TestPaginator.stub(:page) {|args| args[0]}
+
       fake_facade = Module.new do
                   extend self
                   extend GridData::Facade
                   set_model_strategy strategy
+                  set_paginator :test_paginator
       end
       fake_facade.class_variable_set(:@@paginator, nil)
       output = fake_facade.row_data("page" => "2", "per" => "4", "_search" => "true", "filters" => "something",

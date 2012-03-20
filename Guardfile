@@ -1,4 +1,4 @@
-notification :libnotify, :timeout => 3, :transient => true, :append => false, hint: "int:transient:1"
+notification :off
 
 guard 'bundler' do
   watch('Gemfile')

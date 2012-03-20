@@ -33,3 +33,14 @@ Spork.each_run do
   require_relative '../lib/grid_data'
 
 end
+
+module GridData
+  module ModelStrategies
+    module TestStrategy
+    end
+  end
+  module Paginators
+    module TestPaginator
+    end
+  end
+end
