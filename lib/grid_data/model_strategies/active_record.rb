@@ -25,6 +25,17 @@ module GridData
         chain.order("#{sidx} #{sord}")
       end
 
+      def finalize(chain)
+        chain.all
+      end
+
+      def total_rows(chain)
+        chain.count
+      end
+
+      def page(output_list, page, rows)
+
+      end
     end
   end
 end

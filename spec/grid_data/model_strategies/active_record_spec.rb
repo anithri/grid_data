@@ -38,7 +38,6 @@ describe GridData::ModelStrategies::ActiveRecord do
       filter_str = "{\"groupOp\":\"AND\",\"rules\":[{\"field\":\"name\",\"op\":\"bw\",\"data\":\"corp\"},{\"field\":\"country\",\"op\":\"bw\",\"data\":\"us\"}]}"
       result = subject.filter(Color, filter_str )
       result.where_values.length.should == 2
-
     end
   end
 
@@ -47,4 +46,23 @@ describe GridData::ModelStrategies::ActiveRecord do
       subject.sort(Color,"name",nil).order_values.should == ["name "]
     end
   end
+
+  describe "#finalize(chain)" do
+    it "should call the all method on chain" do
+      a = Object.new
+      a.stub(:all)
+      a.should_receive :all
+      subject.finalize(a)
+    end
+  end
+
+  describe "#total_rows(chain)" do
+    it "should call the all method on chain" do
+      a = Object.new
+      a.stub(:count)
+      a.should_receive :count
+      subject.total_rows(a)
+    end
+  end
+
 end

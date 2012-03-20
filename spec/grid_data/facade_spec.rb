@@ -19,10 +19,13 @@ describe GridData::Facade do
     end
   end
 
+  let(:fake_facade) do |strategy|
+
+  end
+
 
   describe "mattr_readers" do
     it "should have a method and class variable for each reader" do
-      warn test_facade.class_variables.inspect
       test_facade.should respond_to(:model, :model_strategy, :paginator)
     end
   end
@@ -129,8 +132,53 @@ describe GridData::Facade do
     it "should raise an argument error if file_list is empty" do
       lambda{test_facade.load_config_file}.should raise_error ArgumentError, /no files listed/
     end
+  end
 
+  describe "#row_data(params)" do
+    it "should return a well formed hash, given just page and per parameters" do
+      strategy = double(GridData::ModelStrategies::ActiveRecord)
+      strategy.stub(:init).and_return("fake")
+      strategy.should_receive(:page) { |args| args[0]}
+      strategy.should_receive(:finalize) { |args| args}
+      strategy.should_receive(:total_rows).and_return(17)
 
+      fake_facade = Module.new do
+                  extend self
+                  extend GridData::Facade
+                  set_model_strategy strategy
+      end
+
+      warn fake_facade.class_variables
+      warn fake_facade.constants
+      fake_facade.class_variable_set(:@@paginator, nil)
+      output = fake_facade.row_data("page" => "2", "per" => "4")
+      output.keys.should =~ [:total, :page, :records, :rows]
+      output[:total].should == 5
+      output[:page].should == 2
+      output[:records].should == 17
+    end
+
+    it "should return a well formed hash, given page, rows, filters, and order" do
+      strategy = double(GridData::ModelStrategies::ActiveRecord)
+      strategy.stub(:init).and_return("fake")
+      strategy.should_receive(:page) { |args| args[0]}
+      strategy.should_receive(:sort) { |args| args[0]}
+      strategy.should_receive(:filter) { |args| args[0]}
+      strategy.should_receive(:finalize) { |args| args}
+      strategy.should_receive(:total_rows).and_return(17)
+      fake_facade = Module.new do
+                  extend self
+                  extend GridData::Facade
+                  set_model_strategy strategy
+      end
+      fake_facade.class_variable_set(:@@paginator, nil)
+      output = fake_facade.row_data("page" => "2", "per" => "4", "_search" => "true", "filters" => "something",
+                                    "sidx" => "abc", "sord" => "xyz")
+      output.keys.should =~ [:total, :page, :records, :rows]
+      output[:total].should == 5
+      output[:page].should == 2
+      output[:records].should == 17
+    end
   end
 
 

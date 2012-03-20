@@ -47,6 +47,7 @@ module GridData
     end
 
     def row_data(params)
+      #PARAMS COME AS STRINGS NOT KEYS
       page = params.fetch('page',1).to_i
       rows = params.fetch('per',1).to_i
       sidx = params['sidx']
@@ -55,18 +56,29 @@ module GridData
       output_list = @@model_strategy.init(@@model)
 
       if do_filter(params)
-        output_list = @model_strategy.filter(output_list, params)
+        output_list = @@model_strategy.filter(output_list, params['filters'])
       end
       if sidx && sord
         output_list = @@model_strategy.sort(output_list, sidx, sord)
       end
+
+      total = @@model_strategy.total_rows(output_list)
 
       if @@paginator
         output_list = @@paginator.page(output_list, page, rows)
       else
         output_list = @@model_strategy.page(output_list, page, rows)
       end
-      return output_list
+      output_list = @@model_strategy.finalize(output_list)
+
+      output = {
+          total:   (total / rows) + 1,
+          page:    page,
+          records: total,
+          rows:    output_list
+      }
+
+      return output
     end
 
     def do_filter(params)

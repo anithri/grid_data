@@ -35,7 +35,7 @@ module GridData::Model
 
       #sorting
       unless sidx.nil?
-        warn "Sorting on: #{sidx} #{sord}"
+        #warn "Sorting on: #{sidx} #{sord}"
         output_list = output_list.order("#{sidx} #{sord}")
       end
 
