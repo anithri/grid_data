@@ -1,12 +1,12 @@
 PATH
-  remote: ../../..
+  remote: ..
   specs:
     grid_data (0.0.2)
       config_library (~> 0.0.3)
       rails (~> 3.2.1)
 
 PATH
-  remote: ../../../../config_library
+  remote: ../../config_library
   specs:
     config_library (0.0.3)
       facets
