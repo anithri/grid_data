@@ -1,0 +1,28 @@
+---
+grid:
+  options:
+    edit: true
+    add: true
+    search: false
+  edit_options:
+    jqMpdal: false
+    closeOnEscape: true
+    bottominfo: Fields marked with(*) are required
+    viewPagerButtons: false
+  add_options:
+  delete_options:
+    ajaxDelOptions:
+      contentType: application/json
+    mtype: DELETE
+    serializeDelData: "function(){return "";}"
+    onClickSubmit: "function(){return "";}"
+  search_options:
+    multipleSearch: true
+filterToolbar:
+  stringResult: true
+  searchOnEnter: true
+NavButton:
+  - name: Toggle Search Toolbar
+    caption: ""
+    buttonicon: "ui-icon-search"
+    onClickButton: "function(){return "";}"

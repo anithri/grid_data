@@ -85,5 +85,15 @@ module GridData
       params['_search'] == "true"
     end
 
+    def mk_grid(grid_opts, table_id, pager_id)
+      javascript_tag(
+          render partial: "grid/grid.js",
+          locals: {  grid_options: grid_opts,
+                     table_id: table_id,
+                     ppager_id: pager_id
+                  }
+      )
+    end
+
   end
 end

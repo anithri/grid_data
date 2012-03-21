@@ -1,0 +1,10 @@
+Description:
+    Installs the initializer, creates the config dir and adds grid_defaults.yaml to it. 
+
+Example:
+    rails generate initializer 
+
+    This will create:
+        config/initializers/grid_data.rb
+        config/grid_data/
+        config/grid_data/000_grid_defaults.yaml

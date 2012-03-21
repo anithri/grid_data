@@ -1,0 +1,8 @@
+Description:
+    Sets up a Model config file for GridData
+
+Example:
+    rails generate model Thing
+
+    This will create:
+        config/grid_data/100_thing_model.yaml

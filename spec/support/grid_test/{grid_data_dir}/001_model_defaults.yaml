@@ -1,0 +1,17 @@
+---
+column-models:
+  id:
+    name: id
+    index: id
+    hidden: true
+    editable: false
+  updated_at:
+    name: updated_at
+    index: updated_at
+    hidden: true
+    editable: false
+  created_at:
+    name: created_at
+    index: created_at
+    hidden: true
+    editable: false

@@ -1,7 +1,6 @@
 require 'active_support/ordered_options'
 require 'active_support/deprecation'
 require 'active_support/concern'
-
 #grid_data includes at bottom
 module GridData
   extend self
@@ -49,3 +48,4 @@ require_relative 'grid_data/sql_operations'
 require_relative 'grid_data/facade'
 require_relative 'grid_data/model_strategies/active_record'
 require_relative 'grid_data/paginators/kamiari'
+require_relative 'grid_data/railtie' if defined? ::Rails::Railtie

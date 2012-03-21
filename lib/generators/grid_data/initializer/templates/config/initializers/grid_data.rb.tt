@@ -1,0 +1,6 @@
+#initialization file for GridData
+GridData.setup do |config|
+  config.config_dir = Rails.root + "<%= grid_data_dir -%>"
+  config.yaml_extension = "<%= options['yaml_extension'] -%>"
+  #config.extra_files = []
+end

@@ -7,15 +7,16 @@ require "grid_data/version"
 Gem::Specification.new do |s|
   s.name        = "grid_data"
   s.version     = GridData::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of GridData."
-  s.description = "TODO: Description of GridData."
+  s.authors     = ["Scott Parrish"]
+  s.email       = ["anithri@gmail.com"]
+  s.homepage    = "https://github.com/anithri/grid_data"
+  s.summary     = "A Library, helpers and views to aid in using JQGrid in Rails."
+  s.description = "A Library, helpers and views to aid in using JQGrid in Rails."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 3.2.1"
+  s.add_dependency "config_library", "~> 0.0.3"
 
   s.add_development_dependency "sqlite3"
 end

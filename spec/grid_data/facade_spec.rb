@@ -145,9 +145,6 @@ describe GridData::Facade do
                   set_model_strategy strategy
                   set_paginator :test_paginator
       end
-
-      warn fake_facade.class_variables
-      warn fake_facade.constants
       fake_facade.class_variable_set(:@@paginator, nil)
       output = fake_facade.row_data("page" => "2", "per" => "4")
       output.keys.should =~ [:total, :page, :records, :rows]
@@ -180,6 +177,4 @@ describe GridData::Facade do
       output[:records].should == 17
     end
   end
-
-
 end
