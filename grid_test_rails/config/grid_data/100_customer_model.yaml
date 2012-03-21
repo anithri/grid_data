@@ -1,0 +1,15 @@
+
+---
+model:
+  customer:
+    columns:
+      name:
+        name: name
+        id: name
+        editable: true
+
+      phone:
+        name: phone
+        id: phone
+        editable: true
+
