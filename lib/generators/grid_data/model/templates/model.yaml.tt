@@ -1,4 +1,12 @@
 ---
-model:
+:model:
   <%= model_name.underscore %>:
-    
+    :columns:
+    <% Object.const_get(model_name).columns.each do |column| %>
+      :<%= column.name %>:
+        :type: <%= column.sql_type %>
+        :index: <%= column.name %>
+        :editable: true
+        :hidden: false
+        :align: <%= [:integer, :decimal].include?(column.type) ? 'right' : 'center' %>
+  <% end %>
