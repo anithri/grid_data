@@ -2,11 +2,9 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.all
-
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @customers }
+      format.json { render json: CustomerFacade.row_data(params)}
     end
   end
 

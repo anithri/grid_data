@@ -1,25 +1,10 @@
+<%- content_for(:head) do -%>
+    <%=  javascript_include_tag :customers %>
+<%- end -%>
 <h1>Listing customers</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Phone</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @customers.each do |customer| %>
-  <tr>
-    <td><%= customer.name %></td>
-    <td><%= customer.phone %></td>
-    <td><%= link_to 'Show', customer %></td>
-    <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-    <td><%= link_to 'Destroy', customer, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+<table id="grid_data"></table>
+<div id="grid_data_pager"></div>
 
-<br />
-
-<%= link_to 'New Customer', new_customer_path %>
+<%= javascript_tag  %>

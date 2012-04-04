@@ -1,0 +1,7 @@
+module <%= model_name.constantize %>Facade
+  extend self
+  extend GridData::Facade
+  set_model_strategy "active_record"
+  set_paginator "kaminari"
+  facade_for <%= model_name.constantize -%>
+end

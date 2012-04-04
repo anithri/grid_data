@@ -1,0 +1,20 @@
+<% facade = CustomerFacade %>
+
+jQuery(document).ready(function() {
+    jQuery("#<%= facade.div_name %>").jqGrid({
+        url:'<%= facade.data_url %>',
+        datatype: "json",
+        colNames: <%= facade.col_names.to_json %>,
+        colModel: <%= facade.col_models.to_json %>,
+        rowNum: <%= facade.default_row %>,
+        rowList: <%= facade.row_list.inspect %>,
+        pager: '<%= facade.pager_name %>',
+        sortname: '<%= facade.default_sort %>',
+        viewrecords: true,
+        sortorder: "desc",
+        caption: <%= facade.table_caption.to_json %>
+    });
+    jQuery("#<%= facade.div_name %>").jqGrid('navGrid','#<%= facade.pager_name %>',{edit:false,add:false,del:false});
+    alert("woot")
+})
+

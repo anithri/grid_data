@@ -1,0 +1,45 @@
+---
+:model:
+  customer:
+    :columns:
+    
+      :id:
+        :label: Id
+        :type: integer
+        :index: id
+        :editable: true
+        :hidden: false
+        :align: right
+    
+      :name:
+        :label: Name
+        :type: string
+        :index: name
+        :editable: true
+        :hidden: false
+        :align: center
+    
+      :phone:
+        :label: Phone
+        :type: string
+        :index: phone
+        :editable: true
+        :hidden: false
+        :align: center
+    
+      :created_at:
+        :label: Created At
+        :type: datetime
+        :index: created_at
+        :editable: true
+        :hidden: false
+        :align: center
+    
+      :updated_at:
+        :label: Updated At
+        :type: datetime
+        :index: updated_at
+        :editable: true
+        :hidden: false
+        :align: center
+    

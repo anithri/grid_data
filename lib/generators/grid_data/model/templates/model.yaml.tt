@@ -4,9 +4,10 @@
     :columns:
     <% Object.const_get(model_name).columns.each do |column| %>
       :<%= column.name %>:
-        :type: <%= column.sql_type %>
+        :label: <%= column.name.titleize %>
+        :type: <%= column.type %>
         :index: <%= column.name %>
         :editable: true
         :hidden: false
         :align: <%= [:integer, :decimal].include?(column.type) ? 'right' : 'center' %>
-  <% end %>
+    <% end %>

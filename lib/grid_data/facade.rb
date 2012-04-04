@@ -49,27 +49,33 @@ module GridData
     def row_data(params)
       #PARAMS COME AS STRINGS NOT KEYS
       page = params.fetch('page',1).to_i
-      rows = params.fetch('per',1).to_i
+      rows = params.fetch('rows',10).to_i
       sidx = params['sidx']
       sord = params['sord']
 
       output_list = @@model_strategy.init(@@model)
-
+      warn output_list.all
       if do_filter(params)
         output_list = @@model_strategy.filter(output_list, params['filters'])
       end
+
+      warn output_list.all
+
       if sidx && sord
         output_list = @@model_strategy.sort(output_list, sidx, sord)
       end
+      warn output_list.all
 
       total = @@model_strategy.total_rows(output_list)
+      warn output_list.all
 
       if @@paginator
-        output_list = @@paginator.page(output_list, page, rows)
+        #output_list = @@paginator.page(output_list, page, rows)
       else
-        output_list = @@model_strategy.page(output_list, page, rows)
+        #output_list = @@model_strategy.page(output_list, page, rows)
       end
       output_list = @@model_strategy.finalize(output_list)
+      warn output_list
 
       output = {
           total:   (total / rows) + 1,
@@ -93,6 +99,54 @@ module GridData
                      ppager_id: pager_id
                   }
       )
+    end
+
+    def div_name
+      "grid_data"
+    end
+
+    def pager_name
+      div_name + "_pager"
+    end
+
+    def default_sort
+      "id"
+    end
+
+    def table_caption
+      "Customer"
+    end
+
+    def data_url
+      "/customers.json"
+    end
+
+    def col_names
+      ["Id", "Name", "Phone"]
+    end
+
+    def col_models
+      [:id, :name, :phone].map{|e| col_model(e)}
+    end
+
+    def col_model(name)
+      {
+        name: config_entry(:model, name.to_sym, :name),
+        index: config_entry(:model, name.to_sym, :index),
+        align: config_entry(:model, name.to_sym, :index)
+      }
+    end
+
+    def config_entry(*key_chain)
+      config.fetch(*key_chain)
+    end
+
+    def default_row
+      10
+    end
+
+    def row_list
+      [10,25,50]
     end
 
   end
